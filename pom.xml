@@ -59,8 +59,8 @@
           <target>${java.version}</target>
           <debug>true</debug>
           <compileSourceRoots>
-            <compileSourceRoot>src/main/java/**</compileSourceRoot>
-            <compileSourceRoot>src/generated/java/**</compileSourceRoot>
+            <compileSourceRoot>src/main/java</compileSourceRoot>
+            <compileSourceRoot>target/generated-sources/openapi</compileSourceRoot>
             <compileSourceRoot>${project.build.directory}/generated-test-sources/tigerbdd/de/gematik/tim/test/drivers</compileSourceRoot>
           </compileSourceRoots>
         </configuration>

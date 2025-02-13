@@ -1,9 +1,7 @@
 FROM maven:3.6.3-openjdk-17-slim
-
-COPY --chown=user:group . /testsuite
-COPY entrypoint.sh /usr/local/bin/
-
+#FROM maven:3.9.9-eclipse-temurin-23-alpine
 WORKDIR /testsuite
+COPY --chown=user:group . /testsuite
+RUN mvn clean compile test-compile
 
-RUN ["chmod", "+x", "/usr/local/bin/entrypoint.sh"]
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+
