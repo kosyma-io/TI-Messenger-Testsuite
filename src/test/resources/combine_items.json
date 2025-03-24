@@ -35,7 +35,7 @@
       "practitioner"
     ],
     "properties": {
-      "homeserver": "mst-one.ujumbe.io",
+      "homeserver": "one-alice.ujumbelabs.com",
       "os": "Windows"
     }
   },
@@ -46,7 +46,7 @@
       "orgAdmin"
     ],
     "properties": {
-      "homeserver": "mst-one.ujumbe.io",
+      "homeserver": "one-alice.ujumbelabs.com",
       "os": "Windows"
     }
   }
