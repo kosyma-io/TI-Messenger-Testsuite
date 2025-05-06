@@ -2,15 +2,451 @@
 
 # Release notes
 
-## Link to TI-Messenger-testsuite [
+## Link to TI-Messenger-testsuite
 
-`docu`](https://github.com/gematik/TI-Messenger-Testsuite/tree/main/doc/userguide/Testsuite.adoc#docu)
+[
+`docu TI-Messenger Version 1.1.X`](https://github.com/gematik/TI-Messenger-Testsuite/tree/main/doc/userguide/Testsuite.adoc)
+
+[
+`docu TI-Messenger Version 2`](https://github.com/gematik/TI-Messenger-Testsuite/tree/main/doc/userguide/Testsuite_Version2.adoc)
+
+## Release 2.2.2
+
+## Bugs
+
+- @TCID:TIM_V2_BASIS_AF_10X0103 and @TCID:TIM_V2_BASIS_AF_10X0104 will no longer try to run the teardown calls against
+  the Matrix homeserver, and instead will call against the test driver as intended
+
+## Changes
+
+- A GET request to the /.well-known/matrix/support endpoint can now return either a 200 or a 404 status code.
+- There are now separate test cases for API calls that require an access token and those that do not require an access
+  token. These are refactoring changes.
+
+## Release 2.2.1
+
+### Changes
+
+- Implementing the CleanUp endpoint (POST /) is now required. It must return a successful status code,
+  otherwise the tests will fail.
+- The CleanUp will no longer be sent to OrgAdmins not defined in the tiger.yaml/combine-items.json. This accommodates to
+  the fact, that an automated OrgAdmin might not be needed for ePA.
+
+## Release 2.2.0
+
+### Bugs
+
+- fixes @TCID:TIM_V2_PRO_AF_010107 to not exit prematurely on the expected 403 status code
+
+- Adjusted Testcase - Added missing Step for leaving Chat
+
+  @TCID:TIM_V2_ePA_AF_05X0503
+
+### Changes
+
+- improves the generated message text to provide the quote source
+
+- API breaking changes, TI-M version V2:
+    - deleteAllowedUsersList and deleteBlockedUsersList expects now a list of users to delete, it will no longer delete
+      the full list!
+    - that made the DELETE endpoints on specific users obsolete, they were removed (ids:
+      deleteAllowedUserMxid/deleteBlockedUserMxid, deleteAllowedUserServerName/deleteBlockedUserServerName)
+    - to further simplify the api and reduce implementation effort also the GET endpoints on specific users were
+      removed (ids: getAllowedUserMxid/getBlockedUserMxid, getAllowedUserServerName/getBlockedUserServerName), instead
+      getAllowedUsersList and getBlockedUsersList will be used
+    - groupNames was added to the authorization list
+
+- API non-breaking changes, removal of unused endpoints:
+    - getLoginOptions
+    - orgAdminFhirHealthcareService
+    - changeRoomSettings
+
+- Testcases adjusted - comparison of topics instead of empty field
+
+  @TCID:TIM_V2_BASIS_AF_09X0101
+
+  @TCID:TIM_V2_BASIS_AF_09X0401
+
+  @TCID:TIM_V2_BASIS_AF_09X0501
+
+- Testcases adjusted - Check for deprecated media thumbnail API 400 also OK
+
+  @TCID:TIM_V2_BASIS_AF_10X0103
+
+  @TCID:TIM_V2_BASIS_AF_10X0104
+
+  @TCID:TIM_V2_BASIS_AF_10X0503
+
+  @TCID:TIM_V2_BASIS_AF_10X0601
+
+### Features
+
+- implements tests related to search in FdV (no WIP anymore)
+
+  @TCID:TIM_V2_BASIS_AF_050501
+
+  @TCID:TIM_V2_BASIS_AF_050502
+
+  @TCID:TIM_V2_BASIS_AF_050503
+
+  @TCID:TIM_V2_BASIS_AF_050701
+
+  @TCID:TIM_V2_BASIS_AF_050702
+
+  @TCID:TIM_V2_BASIS_AF_050801
+
+  @TCID:TIM_V2_BASIS_AF_050802
+
+  @TCID:TIM_V2_BASIS_AF_060501
+
+  @TCID:TIM_V2_BASIS_AF_060502
+
+  @TCID:TIM_V2_BASIS_AF_060503
+
+  @TCID:TIM_V2_BASIS_AF_060504
+
+  @TCID:TIM_V2_BASIS_AF_060505
+
+  @TCID:TIM_V2_BASIS_AF_060506
+
+  @TCID:TIM_V2_BASIS_AF_060701
+
+  @TCID:TIM_V2_BASIS_AF_060702
+
+  @TCID:TIM_V2_BASIS_AF_060801
+
+  @TCID:TIM_V2_BASIS_AF_060802
+
+  @TCID:TIM_V2_BASIS_AF_08X0501
+
+  @TCID:TIM_V2_BASIS_AF_08X0502
+
+  @TCID:TIM_V2_BASIS_AF_08X0701
+
+  @TCID:TIM_V2_BASIS_AF_08X0702
+
+  @TCID:TIM_V2_ePA_AF_04X0501
+
+  @TCID:TIM_V2_ePA_AF_04X0701
+
+- implements tests for checking behaviour when users are added twice to list (no WIP anymore)
+
+  @TCID:TIM_V2_BASIS_AF_050130
+
+  @TCID:TIM_V2_BASIS_AF_050131
+
+  @TCID:TIM_V2_BASIS_AF_050630
+
+  @TCID:TIM_V2_BASIS_AF_050631
+
+  @TCID:TIM_V2_PRO_AF_050130
+
+  @TCID:TIM_V2_PRO_AF_050131
+
+- All endpoints in the TiMessengerTestTreiber.yaml now have a note explaining, if they are used for a client, org-admin,
+  or for both.
+
+- implements tests for authorization of groups (no WIP anymore)
+
+  @TCID:TIM_V2_PRO_AF_050100C
+
+  @TCID:TIM_V2_PRO_AF_050100D
+
+  @TCID:TIM_V2_PRO_AF_06X0101
+
+  @TCID:TIM_V2_PRO_AF_06X0102
+
+  @TCID:TIM_V2_PRO_AF_06X0103
+
+  @TCID:TIM_V2_PRO_AF_06X0104
+
+  @TCID:TIM_V2_ePA_AF_05X0501
+
+  @TCID:TIM_V2_ePA_AF_05X0502
+
+  @TCID:TIM_V2_ePA_AF_05X0503
+
+  @TCID:TIM_V2_ePA_AF_05X0504
+
+
+- Deleted TFs
+
+  @TCID:TIM_V2_BASIS_AF_060112
+
+  @TCID:TIM_V2_BASIS_AF_040114
+
+  @TCID:TIM_V2_BASIS_AF_040908
+
+  @TCID:TIM_V2_BASIS_AF_060612
+
+  @TCID:TIM_V2_PRO_AF_10X0101
+
+  @TCID:TIM_V2_PRO_AF_010107 (former WIP)
+
+## Release 2.1.1
+
+### Features
+
+- testsuite will recognize if an authorization operation is forbidden with the currently used
+  authorization mode
+
+- Current testcases in status WIP: [`WIP-List`](doc/userguide/WIP.txt)
+
+- test suite will now send X-TIM-User-Agent header for all requests directly to homeserver
+
+- Adjusted documentation for TI-M V2 [`Testsuite_Version2`](doc/userguide/Testsuite_Version2.adoc)
+
+
+- implements tests for checking matrix version (no WIP anymore)
+
+  @TCID:TIM_V2_PRO_AF_000105
+
+  @TCID:TIM_V2_ePA_AF_000503
+
+
+- implements tests for checking if block and allowlist entries stay after logout (no WIP anymore)
+
+  @TCID:TIM_V2_BASIS_AF_050132
+
+  @TCID:TIM_V2_BASIS_AF_050133
+
+  @TCID:TIM_V2_BASIS_AF_050632
+
+  @TCID:TIM_V2_BASIS_AF_050633
+
+  @TCID:TIM_V2_PRO_AF_050132
+
+  @TCID:TIM_V2_PRO_AF_050133
+
+
+- implements tests for configuration in other permission mode (negative) (no WIP anymore)
+
+  @TCID:TIM_V2_BASIS_AF_050122
+
+  @TCID:TIM_V2_BASIS_AF_050123
+
+  @TCID:TIM_V2_BASIS_AF_050124
+
+  @TCID:TIM_V2_BASIS_AF_050125
+
+  @TCID:TIM_V2_BASIS_AF_050126
+
+  @TCID:TIM_V2_BASIS_AF_050127
+
+  @TCID:TIM_V2_BASIS_AF_050128
+
+  @TCID:TIM_V2_BASIS_AF_050129
+
+  @TCID:TIM_V2_BASIS_AF_050622
+
+  @TCID:TIM_V2_BASIS_AF_050623
+
+  @TCID:TIM_V2_BASIS_AF_050624
+
+  @TCID:TIM_V2_BASIS_AF_050625
+
+  @TCID:TIM_V2_BASIS_AF_050626
+
+  @TCID:TIM_V2_BASIS_AF_050627
+
+  @TCID:TIM_V2_BASIS_AF_050628
+
+  @TCID:TIM_V2_BASIS_AF_050629
+
+  @TCID:TIM_V2_PRO_AF_050122
+
+  @TCID:TIM_V2_PRO_AF_050123
+
+  @TCID:TIM_V2_PRO_AF_050124
+
+  @TCID:TIM_V2_PRO_AF_050125
+
+  @TCID:TIM_V2_PRO_AF_050126
+
+  @TCID:TIM_V2_PRO_AF_050127
+
+  @TCID:TIM_V2_PRO_AF_050128
+
+  @TCID:TIM_V2_PRO_AF_050129
+
+
+- New Testcase for TI-M Pro (Status WIP)
+
+  @TCID:TIM_V2_PRO_AF_010107
+
+
+- Deleted TFs (ePA)
+
+  @TCID:TIM_V2_ePA_AF_000502
+
+  @TCID:TIM_V2_ePA_AF_000504
+
+  @TCID:TIM_V2_ePA_AF_020502
+
+### Changes
+
+- API change, non-breaking TI-M version 1.1.x: removes unused getContact by mxid endpoint
+- Checks for the specified fields of `MessageContentFile` have been extended in the glue code for sending and receiving
+  attachments.
+
+### Bugs
+
+- bumps API file version (was forgotten during the last releases)
+
+
+- Bug in testcases fixed - adds request parameter for media thumbnail request
+
+  @TCID:TIM_V2_BASIS_AF_10X0103
+
+  @TCID:TIM_V2_BASIS_AF_10X0104
+
+  @TCID:TIM_V2_BASIS_AF_10X0503
+
+  @TCID:TIM_V2_BASIS_AF_10X0601
+
+
+- Bug in testcases fixed - Wrong actor for an endpoint
+
+  @TCID:TIM_V2_BASIS_AF_050111
+
+  @TCID:TIM_V2_BASIS_AF_050116
+
+  @TCID:TIM_V2_BASIS_AF_050117
+
+
+- Bug in testcases fixed - Step erased since room name for direct chat can be filled or empty
+
+  @TCID:TIM_V2_BASIS_AF_09X0101
+
+  @TCID:TIM_V2_BASIS_AF_09X0401
+
+  @TCID:TIM_V2_BASIS_AF_09X0501
+
+## Release 2.1.0
+
+### Beta Release TI-M Testsuite Version 2
+
+### Bugs
+
+- fixes API tests trying to reach homeserver under test driver url
+
+### Changes
+
+- API change, breaking only TI-M Version 2: new endpoint for a logout waiting for a full sync
+- API change: clean-up endpoint (operationId: cleanUp) is mandatory to implement
+
+### Features
+
+- Current testcases in status WIP: [`WIP-List`](doc/userguide/WIP.txt)
+
+
+- implements test for logout incl sync (no WIP anymore)
+
+  @TCID:TIM_V2_BASIS_AF_040114
+
+  @TCID:TIM_V2_BASIS_AF_040908
+
+  @TCID:TIM_V2_BASIS_AF_060112
+
+  @TCID:TIM_V2_BASIS_AF_060612
+
+
+- implements test for deprecated media endpoints (no WIP anymore)
+
+  @TCID:TIM_V2_BASIS_AF_10X0103
+
+  @TCID:TIM_V2_BASIS_AF_10X0104
+
+  @TCID:TIM_V2_BASIS_AF_10X0503
+
+  @TCID:TIM_V2_BASIS_AF_10X0601
+
+
+- implements location tests (no WIP anymore)
+
+  @TCID:TIM_V2_BASIS_AF_11X0107
+
+  @TCID:TIM_V2_BASIS_AF_11X0108
+
+  @TCID:TIM_V2_BASIS_AF_11X0507
+
+  @TCID:TIM_V2_BASIS_AF_11X0508
+
+  @TCID:TIM_V2_BASIS_AF_11X0607
+
+  @TCID:TIM_V2_BASIS_AF_11X0608
+
+
+- implements room state tests (no WIP anymore)
+
+  @TCID:TIM_V2_BASIS_AF_09X0101
+
+  @TCID:TIM_V2_BASIS_AF_09X0102
+
+  @TCID:TIM_V2_BASIS_AF_09X0401
+
+  @TCID:TIM_V2_BASIS_AF_09X0402
+
+  @TCID:TIM_V2_BASIS_AF_09X0501
+
+  @TCID:TIM_V2_BASIS_AF_09X0502
+
+
+- New Testcases for TI-M Pro (Status WIP)
+
+  @TCID:TIM_V2_PRO_AF_06X0103
+
+  @TCID:TIM_V2_PRO_AF_06X0104
+
+
+- New Testcase for TI-M ePA
+
+  @TCID:TIM_V2_ePA_AF_06X0901
+
+
+- Deleted TF
+
+  @TCID:TIM_V2_PRO_AF_020201
+
+## Release 2.0.0
+
+### Beta Release TI-M Testuite Version 2
+
+### Features
+
+- Release Testcases TI-M_V2 (TI-M Pro, TI-M ePA) [
+  `TI-M_V2`](src/test/resources/templates/FeatureFiles/TI-M_V2)
+- Documentation Testsuite V2 [`Testsuite_Version2`](doc/userguide/Testsuite_Version2.adoc)
+
+  **Note**: Please read the documentation. The handling of Testcases with the temporary tag @WIP is
+  also described
+  there.
+
+### Changes
+
+- API change, breaking only TI-M Version 2: adds fields to messages for better checks on media
+  events
+- API change, breaking only TI-M Version 2: access_token is required to be provided on login
+
+## Release 1.5.1
+
+### Changes
+
+- moves configuration of cucumber-test-combinations-maven-plugin and related properties from pom.xml
+  to parent-pom.xml
+
+### Bugs
+
+- fixes assertion of room states in FeatureFile 14 to take effect
+- partly reverts changes from https://github.com/gematik/TI-Messenger-Testsuite/issues/61 by
+  removing compileSourceRoots
 
 ## Release 1.5.0
 
 ### Changes
 
-- API change, breaking only ePa: renames domains under authorisation-management to server-name. More information
+- API change, breaking only ePa: renames domains under authorisation-management to server-name. More
+  information
   at [`server-name`](https://spec.matrix.org/v1.11/appendices/#server-name)
 
 ## Release 1.4.3

@@ -23,6 +23,7 @@ import static de.gematik.tim.test.glue.api.ActorMemoryKeys.IS_ORG_ADMIN;
 import static de.gematik.tim.test.glue.api.ActorMemoryKeys.MX_ID;
 import static de.gematik.tim.test.glue.api.GeneralStepsGlue.checkResponseCode;
 import static de.gematik.tim.test.glue.api.TestdriverApiEndpoint.GET_DEVICES;
+import static de.gematik.tim.test.glue.api.cleanup.CleanupTrigger.sendCleanupRequest;
 import static de.gematik.tim.test.glue.api.devices.CheckClientKindTask.checkIs;
 import static de.gematik.tim.test.glue.api.devices.ClaimDeviceTask.claimDevice;
 import static de.gematik.tim.test.glue.api.devices.ClientKind.CLIENT;
@@ -50,6 +51,7 @@ import static net.serenitybdd.screenplay.actors.OnStage.withCurrentActor;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.springframework.http.HttpStatus.OK;
 
+import de.gematik.tim.test.glue.api.cleanup.TestCaseContext;
 import de.gematik.tim.test.glue.api.exceptions.TestRunException;
 import de.gematik.tim.test.glue.api.rawdata.RawDataStatistics;
 import de.gematik.tim.test.glue.api.threading.ParallelExecutor;
@@ -68,6 +70,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.cucumber.junit.CucumberOptions;
+import io.cucumber.plugin.event.TestCase;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -94,6 +97,11 @@ public class DevicesControllerGlue {
     setAllowParallelClaim(!scenario.getSourceTagNames().contains(NO_PARALLEL_TAG));
     if (TRUE.equals(CLAIM_PARALLEL) && allowParallelClaim) {
       setParallelFlag(true);
+    }
+    TestCase testCase = TestCaseContext.getTestCase();
+    boolean cleanUpSuccess = sendCleanupRequest(testCase.getTestSteps());
+    if (!cleanUpSuccess) {
+      throw new TestRunException("Cleanup failed - scenario will be skipped");
     }
   }
 
@@ -138,18 +146,14 @@ public class DevicesControllerGlue {
   }
 
   private void claimSpecificDevice(ClaimInfo claimInfo) {
-    try {
-      switch (claimInfo.kind) {
-        case PRACTITIONER -> reserveClient(claimInfo.actor, claimInfo.api, CLIENT, PRACTITIONER);
-        case ORG_ADMIN -> reserveClient(claimInfo.actor, claimInfo.api, ORG_ADMIN);
-        case CLIENT -> reserveClient(claimInfo.actor, claimInfo.api, CLIENT);
-        case EPA_CLIENT -> reserveClient(claimInfo.actor, claimInfo.api, CLIENT, EPA_CLIENT);
-        case PRO_CLIENT -> reserveClient(claimInfo.actor, claimInfo.api, CLIENT, PRO_CLIENT);
-        case PRO_PRACTITIONER ->
-            reserveClient(claimInfo.actor, claimInfo.api, CLIENT, PRACTITIONER, PRO_PRACTITIONER);
-      }
-    } catch (TestRunException e) {
-      log.error("Error while claiming device", e);
+    switch (claimInfo.kind) {
+      case PRACTITIONER -> reserveClient(claimInfo.actor, claimInfo.api, CLIENT, PRACTITIONER);
+      case ORG_ADMIN -> reserveClient(claimInfo.actor, claimInfo.api, ORG_ADMIN);
+      case CLIENT -> reserveClient(claimInfo.actor, claimInfo.api, CLIENT);
+      case EPA_CLIENT -> reserveClient(claimInfo.actor, claimInfo.api, CLIENT, EPA_CLIENT);
+      case PRO_CLIENT -> reserveClient(claimInfo.actor, claimInfo.api, CLIENT, PRO_CLIENT);
+      case PRO_PRACTITIONER ->
+          reserveClient(claimInfo.actor, claimInfo.api, CLIENT, PRACTITIONER, PRO_PRACTITIONER);
     }
   }
 

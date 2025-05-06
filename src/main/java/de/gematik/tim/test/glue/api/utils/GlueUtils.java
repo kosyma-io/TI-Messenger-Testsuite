@@ -104,6 +104,15 @@ public class GlueUtils {
     }
   }
 
+  public static void checkRoomVersionIs(RoomDTO room, String version) {
+    if (room.getRoomVersion() == null || !room.getRoomVersion().equals(version)) {
+      throw new AssertionFailed(
+          format(
+              "Room %s does not have correct version. Expected version %s, but was %s",
+              room.getRoomId(), version, room.getRoomVersion()));
+    }
+  }
+
   private static boolean versionNotSupported(String roomVersion) {
     List<String> supportedVersions = List.of("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
     return !supportedVersions.contains(roomVersion);
@@ -222,15 +231,38 @@ public class GlueUtils {
   }
 
   public static String createUniqueMessageText() {
-    return switch (random.nextInt(7)) {
-      case 1 -> faker.gameOfThrones().quote() + "-" + Instant.now().toEpochMilli();
-      case 2 -> faker.friends().quote() + "-" + Instant.now().toEpochMilli();
-      case 3 -> faker.harryPotter().quote() + "-" + Instant.now().toEpochMilli();
-      case 4 -> faker.rickAndMorty().quote() + "-" + Instant.now().toEpochMilli();
-      case 5 -> faker.lebowski().quote() + "-" + Instant.now().toEpochMilli();
-      case 6 -> faker.witcher().quote() + "-" + Instant.now().toEpochMilli();
-      default -> faker.yoda().quote() + "-" + Instant.now().toEpochMilli();
-    };
+    String quote =
+        switch (random.nextInt(7)) {
+          case 1 -> "Game of Thrones: " + faker.gameOfThrones().quote();
+          case 2 -> "Back to the future: " + faker.backToTheFuture().quote();
+          case 3 -> "Harry Potter: " + faker.harryPotter().quote();
+          case 4 -> "Twin Peaks: " + faker.twinPeaks().quote();
+          case 5 -> "The big Lebowski: " + faker.lebowski().quote();
+          case 6 -> "Buffy the vampire slayer: " + faker.buffy().quotes();
+          default -> "Yoda: " + faker.yoda().quote();
+        };
+    return "Generated text for test - " + circumventProfanityFilters(quote);
+  }
+
+  private static String circumventProfanityFilters(String quote) {
+    List<String> filterTriggers = List.of("bastards", "bitch", "jerk-off");
+    if (filterTriggers.stream().anyMatch(quote::contains)) {
+      return "Hitchhikers Guide to the galaxy: " + faker.hitchhikersGuideToTheGalaxy().quote();
+    } else {
+      return quote;
+    }
+  }
+
+  public static String createUniqueMessageTextWithTimestamp() {
+    return createUniqueMessageText() + "-" + Instant.now().toEpochMilli();
+  }
+
+  public static String createTopic() {
+    String topic = createUniqueMessageText();
+    if (topic.length() > 200) {
+      topic = topic.substring(0, 200);
+    }
+    return topic;
   }
 
   public static List<?> getResourcesFromSearchResult(
@@ -406,6 +438,11 @@ public class GlueUtils {
   @ParameterType(value = "(?:.*)", preferForRegexMatch = true)
   public List<String> listOfStrings(String arg) {
     return stream(arg.split(",\\s?")).map(str -> str.replace("\"", "")).toList();
+  }
+
+  @ParameterType(value = "(?:.*)", name = "listOfInts")
+  public List<Integer> listOfInts(String arg) {
+    return stream(arg.split(",\\s?")).map(str -> Integer.valueOf(str.replace("\"", ""))).toList();
   }
 
   public static <T extends Actor> String getHomeServerWithoutHttpAndPort(T actor) {

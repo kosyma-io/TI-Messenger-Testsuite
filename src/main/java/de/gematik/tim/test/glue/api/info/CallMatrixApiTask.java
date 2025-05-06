@@ -16,31 +16,52 @@
 
 package de.gematik.tim.test.glue.api.info;
 
-import de.gematik.tim.test.glue.api.TestdriverApiEndpoint.HttpMethod;
 import de.gematik.tim.test.glue.api.TestdriverApiInteraction;
 import java.util.ArrayList;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import net.serenitybdd.screenplay.Actor;
-import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.rest.interactions.RestInteraction;
 
 @RequiredArgsConstructor
-public class CallMatrixApiTask implements Task {
+public class CallMatrixApiTask extends WithHomeserverForwardingTask
+    implements BuildWithUserAgentTask {
 
-  private final String matrixUrl;
   private final String httpMethod;
+  private final String matrixUrl;
+  private String accessToken;
+  private Map<String, String> requestParameter;
 
-  public static CallMatrixApiTask callForbiddenMatrixEndpoint(String matrixUrl, String httpMethod) {
-    return new CallMatrixApiTask(matrixUrl, httpMethod);
+  public static CallMatrixApiTask callMatrixEndpoint(String httpMethod, String matrixUrl) {
+    return new CallMatrixApiTask(httpMethod, matrixUrl);
+  }
+
+  public CallMatrixApiTask withAccessToken(String accessToken) {
+    this.accessToken = accessToken;
+    return this;
+  }
+
+  public CallMatrixApiTask withRequestParameter(Map<String, String> requestParameter) {
+    this.requestParameter = requestParameter;
+    return this;
   }
 
   @Override
   public <T extends Actor> void performAs(T actor) {
-    actor.attemptsTo(request());
-  }
-
-  private TestdriverApiInteraction request() {
-    RestInteraction restInteraction = HttpMethod.valueOf(httpMethod).creator.apply(matrixUrl);
-    return new TestdriverApiInteraction(restInteraction, new ArrayList<>());
+    super.performAs(actor);
+    RestInteraction matrixApiCall;
+    if (accessToken != null) {
+      matrixApiCall = buildApiCall(httpMethod, matrixUrl, accessToken);
+    } else {
+      matrixApiCall = buildApiCall(httpMethod, matrixUrl);
+    }
+    if (requestParameter != null) {
+      for (Map.Entry<String, String> requestParameterEntry : requestParameter.entrySet()) {
+        matrixApiCall.with(
+            request ->
+                request.params(requestParameterEntry.getKey(), requestParameterEntry.getValue()));
+      }
+    }
+    actor.attemptsTo(new TestdriverApiInteraction(matrixApiCall, new ArrayList<>()));
   }
 }

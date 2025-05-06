@@ -23,7 +23,7 @@ import static de.gematik.tim.test.glue.api.ActorMemoryKeys.OWN_ROOM_MEMBERSHIP_S
 import static de.gematik.tim.test.glue.api.TestdriverApiEndpoint.SEND_DIRECT_MESSAGE;
 import static de.gematik.tim.test.glue.api.room.UseRoomAbility.addRoomToActor;
 import static de.gematik.tim.test.glue.api.room.questions.GetRoomQuestion.ownRoom;
-import static de.gematik.tim.test.glue.api.utils.GlueUtils.createUniqueMessageText;
+import static de.gematik.tim.test.glue.api.utils.GlueUtils.createUniqueMessageTextWithTimestamp;
 import static de.gematik.tim.test.glue.api.utils.GlueUtils.isSameHomeserver;
 import static de.gematik.tim.test.glue.api.utils.TestcasePropertiesManager.addMessage;
 import static de.gematik.tim.test.glue.api.utils.TestcasePropertiesManager.addRoom;
@@ -34,6 +34,7 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 import de.gematik.tim.test.glue.api.rawdata.RawDataStatistics;
 import de.gematik.tim.test.models.DirectMessageDTO;
+import de.gematik.tim.test.models.MessageContentInfoDTO;
 import de.gematik.tim.test.models.MessageDTO;
 import de.gematik.tim.test.models.RoomDTO;
 import java.util.List;
@@ -47,9 +48,40 @@ public class SendDirectMessageTask implements Task {
 
   private final Actor toActor;
   private final String message;
+  private String msgType = "m.text";
+  private String fileId;
+  private String mimetype;
+  private Integer size;
+  private String geoUri;
 
   public static SendDirectMessageTask sendDirectMessageTo(Actor toActor, String message) {
     return new SendDirectMessageTask(toActor, message);
+  }
+
+  public SendDirectMessageTask withFileId(String fileId) {
+    this.fileId = fileId;
+    return this;
+  }
+
+
+  public SendDirectMessageTask withMimetype(String mimetype) {
+    this.mimetype = mimetype;
+    return this;
+  }
+
+  public SendDirectMessageTask withSize(Integer size) {
+    this.size = size;
+    return this;
+  }
+
+  public SendDirectMessageTask withMsgType(String msgType) {
+    this.msgType = msgType;
+    return this;
+  }
+
+  public SendDirectMessageTask withGeoUri(String geoUri) {
+    this.geoUri = geoUri;
+    return this;
   }
 
   @Override
@@ -58,20 +90,37 @@ public class SendDirectMessageTask implements Task {
     String toMxId = toActor.recall(MX_ID);
 
     DirectMessageDTO directMessage =
-        new DirectMessageDTO().body(createUniqueMessageText()).msgtype("m.text").toAccount(toMxId);
+            new DirectMessageDTO().msgtype(msgType).toAccount(toMxId);
+    if (msgType.equals("m.image") || msgType.equals("m.video") || msgType.equals("m.audio") || msgType.equals("m.file")) {
+      directMessage.body(message);
+    }
+    else{
+      directMessage.body(createUniqueMessageTextWithTimestamp());
+    }
+    if (fileId != null) {
+      directMessage.fileId(fileId);
+    }
+    if(mimetype != null && size != null) {
+      directMessage.info(new MessageContentInfoDTO().mimetype(mimetype).size(size));
+    }
+    if(geoUri != null) {
+      directMessage.geoUri(geoUri);
+    }
     actor.attemptsTo(SEND_DIRECT_MESSAGE.request().with(req -> req.body(directMessage)));
     if (HttpStatus.valueOf(lastResponse().statusCode()).is2xxSuccessful()) {
       addMessage(this.message, lastResponse().as(MessageDTO.class));
     }
 
+
+
     logEventsAndSaveRoomToActor(actor, actorMxId, toMxId);
   }
 
   private <T extends Actor> void logEventsAndSaveRoomToActor(
-      T actor, String actorMxId, String toMxId) {
+          T actor, String actorMxId, String toMxId) {
     boolean roomDoesExist =
-        isNotBlank(actor.recall(DIRECT_CHAT_NAME + toMxId))
-            || isNotBlank(this.toActor.recall(DIRECT_CHAT_NAME + actorMxId));
+            isNotBlank(actor.recall(DIRECT_CHAT_NAME + toMxId))
+                    || isNotBlank(this.toActor.recall(DIRECT_CHAT_NAME + actorMxId));
 
     boolean requestSuccessful = lastResponse().getStatusCode() == 200;
     if (isSameHomeserver(toMxId, actorMxId)) {

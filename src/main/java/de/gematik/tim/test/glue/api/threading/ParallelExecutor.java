@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import kong.unirest.UnirestInstance;
@@ -43,13 +42,28 @@ public class ParallelExecutor {
 
   @SuppressWarnings("java:S2142")
   public static void run(List<Callable<Void>> calls) {
+    Exception exception = null;
     try {
-      List<Future<Void>> futures = executor.invokeAll(calls);
-      for (Future<Void> future : futures) {
-        future.get();
+      List<Future<Void>> parallelTasks = executor.invokeAll(calls);
+      for (Future<Void> task : parallelTasks) {
+        try {
+          task.get();
+        } catch (Exception e) {
+          if (exception == null) {
+            exception = e;
+            for (Future<Void> taskToBeCancelled : parallelTasks) {
+              if (taskToBeCancelled != task) {
+                taskToBeCancelled.cancel(true);
+              }
+            }
+          }
+        }
       }
-    } catch (ExecutionException | InterruptedException e) {
-      throw new TestRunException("Claiming parallel failed...", e);
+    } catch (InterruptedException e) {
+      exception = e;
+    }
+    if (exception != null) {
+      throw new TestRunException("Claiming parallel failed...", exception);
     }
   }
 

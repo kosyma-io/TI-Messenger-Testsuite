@@ -17,13 +17,18 @@
 package de.gematik.tim.test.glue.api;
 
 import static net.serenitybdd.rest.SerenityRest.lastResponse;
+import static net.serenitybdd.screenplay.actors.OnStage.theActorCalled;
+import static net.serenitybdd.screenplay.rest.questions.ResponseConsequence.seeThatResponse;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.emptyOrNullString;
+import static org.hamcrest.Matchers.not;
 
-import de.gematik.tim.test.glue.api.exceptions.TestRunException;
 import de.gematik.tim.test.glue.api.threading.ParallelExecutor;
 import de.gematik.tim.test.glue.api.utils.TestcasePropertiesManager;
 import io.cucumber.java.de.Dann;
 import io.cucumber.java.en.Then;
+
+import java.util.List;
 
 public class GeneralStepsGlue {
 
@@ -35,9 +40,32 @@ public class GeneralStepsGlue {
     if (TestcasePropertiesManager.isRunningParallel()) {
       assertThat(ParallelExecutor.getLastResponseCodeForActor(actorName)).isEqualTo(responseCode);
     } else {
-      if (lastResponse().statusCode() != responseCode) {
-        throw new TestRunException("Operation returned error code " + lastResponse().statusCode());
-      }
+      assertThat(lastResponse().statusCode())
+          .as("Operation returned error code " + lastResponse().statusCode())
+          .isEqualTo(responseCode);
     }
+  }
+
+  @Then("{string} receives any response code of {listOfInts}")
+  @Dann("erhält {string} einen der Responsecodes {listOfInts}")
+  public static void anyOfResponseCode(String actorName, List<Integer> responseCodes) {
+    if (TestcasePropertiesManager.isRunningParallel()) {
+      assertThat(responseCodes)
+          .as("Operation returned error code " + lastResponse().statusCode())
+          .contains(ParallelExecutor.getLastResponseCodeForActor(actorName));
+    } else {
+      assertThat(responseCodes)
+          .as("Operation returned error code " + lastResponse().statusCode())
+          .contains(lastResponse().statusCode());
+    }
+  }
+
+  @Then("{string} checks, that the response is not empty")
+  @Dann("{string} überprüft, dass die Response befüllt ist")
+  public static void responseContainsBody(String actorName) {
+    theActorCalled(actorName)
+        .should(
+            seeThatResponse(
+                "check response body is not empty", res -> res.body(not(emptyOrNullString()))));
   }
 }
