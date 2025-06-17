@@ -35,11 +35,11 @@
     <feature.template.dir.11x>
       ${feature.template.basedir}/FeatureFiles/TI-M_11X/Zulassungstests
     </feature.template.dir.11x>
-    <feature.template.dir.V2>
+    <!-- <feature.template.dir.V2>
       ${feature.template.basedir}/FeatureFiles/TI-M_V2
-    </feature.template.dir.V2>
+    </feature.template.dir.V2> -->
     <feature.template.dir>
-      ${feature.template.dir.V2}
+      ${feature.template.dir.11x}
     </feature.template.dir>
 
     <sonar.coverage.exclusions>**/*</sonar.coverage.exclusions>
