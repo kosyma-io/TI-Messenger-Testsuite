@@ -10,6 +10,95 @@
 [
 `docu TI-Messenger Version 2`](https://github.com/gematik/TI-Messenger-Testsuite/tree/main/doc/userguide/Testsuite_Version2.adoc)
 
+## Release 2.3.0
+
+### Bugs
+
+- will now correctly serialize the authorization mode as json,
+  solving https://github.com/gematik/TI-Messenger-Testsuite/issues/81
+
+### Changes
+
+- test driver API: clarified claim duration to be refreshed on each device interaction
+- test driver API: added missing ePA tag for searchOnHomeserver
+- test driver API: removes unused endpoint syncedLogout
+- test driver API: removes unused endpoint getPublicRooms
+- test driver API: removes a great amount of currently unused query parameters for FHIR searches
+
+### Features
+
+- test driver API: adds request examples for operationId login to clarify
+  for https://github.com/gematik/TI-Messenger-Testsuite/issues/66
+- test driver API: adds two examples for operationId getDevices to
+  solve https://github.com/gematik/TI-Messenger-Testsuite/issues/64
+- adjusted Testcases for valid response code 200
+
+@TCID:TIM_V2_BASIS_AF_10X0109
+
+@TCID:TIM_V2_BASIS_AF_10X0508
+
+## Release 2.2.3
+
+### Features
+
+- Testcases enabled - Dehydrated Devices (no WIP anymore)
+
+Find details about testing with the reference implementation in the chapter 7.4 dehydrated devices in [
+`docu TI-Messenger Version 2`](https://github.com/gematik/TI-Messenger-Testsuite/tree/main/doc/userguide/Testsuite_Version2.adoc)
+
+@TCID:TIM_V2_BASIS_AF_040109
+
+@TCID:TIM_V2_BASIS_AF_040111
+
+@TCID:TIM_V2_BASIS_AF_040112
+
+@TCID:TIM_V2_BASIS_AF_040113
+
+@TCID:TIM_V2_BASIS_AF_040904
+
+@TCID:TIM_V2_BASIS_AF_040906
+
+@TCID:TIM_V2_BASIS_AF_040907
+
+@TCID:TIM_V2_BASIS_AF_060107
+
+@TCID:TIM_V2_BASIS_AF_060109
+
+@TCID:TIM_V2_BASIS_AF_060110
+
+@TCID:TIM_V2_BASIS_AF_060111
+
+@TCID:TIM_V2_BASIS_AF_060507
+
+@TCID:TIM_V2_BASIS_AF_060509
+
+@TCID:TIM_V2_BASIS_AF_060510
+
+@TCID:TIM_V2_BASIS_AF_060511
+
+@TCID:TIM_V2_BASIS_AF_060607
+
+@TCID:TIM_V2_BASIS_AF_060609
+
+@TCID:TIM_V2_BASIS_AF_060610
+
+@TCID:TIM_V2_BASIS_AF_060611
+
+- Testcases deleted - Dehydrated Devices (former WIP)
+
+@TCID:TIM_V2_BASIS_AF_040110
+
+@TCID:TIM_V2_BASIS_AF_040905
+
+@TCID:TIM_V2_BASIS_AF_060108
+
+@TCID:TIM_V2_BASIS_AF_060508
+
+@TCID:TIM_V2_BASIS_AF_060608
+
+- doc/userguide/WIP.txt deleted - there are no WIP Tests anymore
+- updates CONTRIBUTING.md to clarify how to open a PR
+
 ## Release 2.2.2
 
 ## Bugs
