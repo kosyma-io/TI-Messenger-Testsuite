@@ -45,3 +45,4 @@ dev-pom.xml
 release-pom.xml
 config.env
 
+.DS_Store

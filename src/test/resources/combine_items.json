@@ -1,12 +1,8 @@
 [
   {
     "value": "testdriverApi_A_LINUX_Client",
-    "url": "http://localhost:3000",
-    "tags": [
-      "client",
-      "canSendMessages",
-      "practitioner"
-    ],
+    "url": "http://localhost:30001",
+    "tags": ["proClient", "canSendMessages", "practitioner"],
     "properties": {
       "homeserver": "dev.ujumbelabs.com",
       "os": "Windows"
@@ -14,12 +10,8 @@
   },
   {
     "value": "testdriverApi_B_LINUX_Client",
-    "url": "http://localhost:3010",
-    "tags": [
-      "client",
-      "canSendMessages",
-      "practitioner"
-    ],
+    "url": "http://localhost:30002",
+    "tags": ["proClient", "canSendMessages", "practitioner"],
     "properties": {
       "homeserver": "dev.ujumbelabs.com",
       "os": "Windows"
@@ -27,13 +19,8 @@
   },
   {
     "value": "testdriverApi_C_LINUX_Client",
-    "url": "http://localhost:3020",
-    "tags": [
-      "client",
-      "canSendMessages",
-      "prefIOP",
-      "practitioner"
-    ],
+    "url": "http://localhost:30003",
+    "tags": ["proClient", "canSendMessages", "prefIOP", "practitioner"],
     "properties": {
       "homeserver": "one-alice.ujumbelabs.com",
       "os": "Windows"
@@ -41,12 +28,10 @@
   },
   {
     "value": "testdriverApi_D_LINUX_Orgadmin",
-    "url": "http://localhost:3030",
-    "tags": [
-      "orgAdmin"
-    ],
+    "url": "http://localhost:30004",
+    "tags": ["orgAdmin"],
     "properties": {
-      "homeserver": "one-alice.ujumbelabs.com",
+      "homeserver": "dev.ujumbelabs.com",
       "os": "Windows"
     }
   }

@@ -1,174 +1,38 @@
 [
   {
-    "value": "testdriverApi-A-WIN-Client",
-    "url": "https://localhost:8080",
-    "tags": [
-      "client",
-      "practitioner",
-      "canSendMessages",
-      "prefIOP"
-    ],
+    "value": "testdriverApi_A_LINUX_Client",
+    "url": "https://testdriver1.ujumbelabs.com",
+    "tags": ["proClient", "canSendMessages", "practitioner"],
     "properties": {
-      "homeserver": "A",
+      "homeserver": "dev.ujumbelabs.com",
       "os": "Windows"
     }
   },
   {
-    "value": "testdriverApi-A-ORG",
-    "url": "https://localhost:8081",
-    "tags": [
-      "orgAdmin"
-    ],
+    "value": "testdriverApi_B_LINUX_Client",
+    "url": "https://testdriver2.ujumbelabs.com",
+    "tags": ["proClient", "canSendMessages", "practitioner"],
     "properties": {
-      "homeserver": "A",
-      "os": "Linux"
-    }
-  },
-  {
-    "value": "testdriverApi-B-WIN-Client",
-    "url": "https://localhost:8082",
-    "tags": [
-      "client",
-      "practitioner",
-      "canSendMessages",
-      "prefIOP"
-    ],
-    "properties": {
-      "homeserver": "B",
+      "homeserver": "dev.ujumbelabs.com",
       "os": "Windows"
     }
   },
   {
-    "value": "testdriverApi-B-ORG",
-    "url": "https://localhost:8083",
-    "tags": [
-      "orgAdmin"
-    ],
+    "value": "testdriverApi_C_LINUX_Client",
+    "url": "https://testdriver3.ujumbelabs.com",
+    "tags": ["proClient", "canSendMessages", "prefIOP", "practitioner"],
     "properties": {
-      "homeserver": "B",
-      "os": "Linux"
-    }
-  },
-  {
-    "value": "testdriverApi-C-IOS-Insurant",
-    "url": "https://localhost:8084",
-    "tags": [
-      "epaClient",
-      "canSendMessages",
-      "prefIOP"
-    ],
-    "properties": {
-      "homeserver": "C",
-      "os": "IOS"
-    }
-  },
-  {
-    "value": "testdriverApi-C-ORG",
-    "url": "https://localhost:8085",
-    "tags": [
-      "orgAdmin"
-    ],
-    "properties": {
-      "homeserver": "C",
-      "os": "Linux"
-    }
-  },
-  {
-    "value": "testdriverApi-D-AND-Insurant",
-    "url": "https://localhost:8086",
-    "tags": [
-      "epaClient",
-      "canSendMessages",
-      "prefIOP"
-    ],
-    "properties": {
-      "homeserver": "D",
-      "os": "Android"
-    }
-  },
-  {
-    "value": "testdriverApi-D-ORG",
-    "url": "https://localhost:8087",
-    "tags": [
-      "orgAdmin"
-    ],
-    "properties": {
-      "homeserver": "D",
-      "os": "Linux"
-    }
-  },
-  {
-    "value": "testdriverApi-E-WIN-Pro",
-    "url": "https://localhost:8088",
-    "tags": [
-      "proClient",
-      "practitioner",
-      "canSendMessages",
-      "prefIOP"
-    ],
-    "properties": {
-      "homeserver": "E",
+      "homeserver": "one-alice.ujumbelabs.com",
       "os": "Windows"
     }
   },
   {
-    "value": "testdriverApi-E-ORG",
-    "url": "https://localhost:8089",
-    "tags": [
-      "orgAdmin"
-    ],
+    "value": "testdriverApi_D_LINUX_Orgadmin",
+    "url": "https://testdriver4.ujumbelabs.com",
+    "tags": ["orgAdmin"],
     "properties": {
-      "homeserver": "E",
+      "homeserver": "one-alice.ujumbelabs.com",
       "os": "Windows"
-    }
-  },
-  {
-    "value": "testdriverApi-F-WIN-Pro",
-    "url": "https://localhost:8090",
-    "tags": [
-      "proClient",
-      "practitioner",
-      "canSendMessages",
-      "prefIOP"
-    ],
-    "properties": {
-      "homeserver": "F",
-      "os": "Windows"
-    }
-  },
-  {
-    "value": "testdriverApi-F-ORG",
-    "url": "https://localhost:8091",
-    "tags": [
-      "orgAdmin"
-    ],
-    "properties": {
-      "homeserver": "F",
-      "os": "Linux"
-    }
-  },
-  {
-    "value": "testdriverApi-G-WIN-Pro",
-    "url": "https://localhost:8092",
-    "tags": [
-      "proClient",
-      "practitioner",
-      "canSendMessages"
-    ],
-    "properties": {
-      "homeserver": "G",
-      "os": "Windows"
-    }
-  },
-  {
-    "value": "testdriverApi-G-ORG",
-    "url": "https://localhost:8093",
-    "tags": [
-      "orgAdmin"
-    ],
-    "properties": {
-      "homeserver": "G",
-      "os": "Linux"
     }
   }
 ]

@@ -1,10 +1,18 @@
 tigerProxy:
+  #  tls:
+  #    forwardMutualTlsIdentity: "${TIM_KEYSTORE};${TIM_KEYSTORE_PW};pkcs12"
   proxyRoutes:
     - from: http://testdriverApi_A_LINUX_Client
-      to: http://localhost:3000
+      # to: https://testdriver1.ujumbelabs.com
+      to: http://localhost:30001
     - from: http://testdriverApi_B_LINUX_Client
-      to: http://localhost:3010
+      # to: https://testdriver2.ujumbelabs.com
+      to: http://localhost:30002
     - from: http://testdriverApi_C_LINUX_Client
-      to: http://localhost:3020
+      # to: https://testdriver3.ujumbelabs.com
+      to: http://localhost:30003
     - from: http://testdriverApi_D_LINUX_Orgadmin
-      to: http://localhost:3030
+      # to: https://testdriver4.ujumbelabs.com
+      to: http://localhost:30004
+    # - from: https://RU_LINUX_Client
+    #   to: https://ctdpub-b8cea2c9-1a56-49a3-892c-76ead7963a5a.ru.timref.akquinet.nx2.dev
