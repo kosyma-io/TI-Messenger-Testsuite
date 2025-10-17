@@ -4,7 +4,7 @@
     "url": "http://localhost:30001",
     "tags": ["proClient", "canSendMessages", "practitioner"],
     "properties": {
-      "homeserver": "dev.ujumbelabs.com",
+      "homeserver": "gematik.ujumbelabs.com",
       "os": "Windows"
     }
   },
@@ -13,7 +13,7 @@
     "url": "http://localhost:30002",
     "tags": ["proClient", "canSendMessages", "practitioner"],
     "properties": {
-      "homeserver": "dev.ujumbelabs.com",
+      "homeserver": "gematik.ujumbelabs.com",
       "os": "Windows"
     }
   },
@@ -31,7 +31,7 @@
     "url": "http://localhost:30004",
     "tags": ["orgAdmin"],
     "properties": {
-      "homeserver": "dev.ujumbelabs.com",
+      "homeserver": "gematik.ujumbelabs.com",
       "os": "Windows"
     }
   }
