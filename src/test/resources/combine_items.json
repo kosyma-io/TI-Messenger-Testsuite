@@ -22,7 +22,7 @@
     "url": "http://localhost:30003",
     "tags": ["proClient", "canSendMessages", "prefIOP", "practitioner"],
     "properties": {
-      "homeserver": "one-alice.ujumbelabs.com",
+      "homeserver": "kosyma.gesundheitsmessenger.com",
       "os": "Windows"
     }
   },
