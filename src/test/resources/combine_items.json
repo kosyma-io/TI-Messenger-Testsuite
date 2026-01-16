@@ -4,7 +4,7 @@
     "url": "http://localhost:30001",
     "tags": ["proClient", "canSendMessages", "practitioner"],
     "properties": {
-      "homeserver": "bjmvmyeiqhnmialq.gesundheitsmessenger.com",
+      "homeserver": "gematik.ujumbelabs.com",
       "os": "Windows"
     }
   },
@@ -13,7 +13,7 @@
     "url": "http://localhost:30002",
     "tags": ["proClient", "canSendMessages", "practitioner"],
     "properties": {
-      "homeserver": "bjmvmyeiqhnmialq.gesundheitsmessenger.com",
+      "homeserver": "gematik.ujumbelabs.com",
       "os": "Windows"
     }
   },
@@ -22,7 +22,7 @@
     "url": "http://localhost:30003",
     "tags": ["proClient", "canSendMessages", "prefIOP", "practitioner"],
     "properties": {
-      "homeserver": "jlimyalwicplcrmc.gesundheitsmessenger.com",
+      "homeserver": "kosyma.gesundheitsmessenger.com",
       "os": "Windows"
     }
   },
@@ -31,7 +31,7 @@
     "url": "http://localhost:30004",
     "tags": ["orgAdmin"],
     "properties": {
-      "homeserver": "bjmvmyeiqhnmialq.gesundheitsmessenger.com",
+      "homeserver": "gematik.ujumbelabs.com",
       "os": "Windows"
     }
   }
