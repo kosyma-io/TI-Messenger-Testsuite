@@ -1,0 +1,42 @@
+[
+  {
+    "value": "testdriverApi_A_LINUX_Client",
+    "url": "http://localhost:30001",
+    "tags": ["proClient", "canSendMessages", "practitioner"],
+    "properties": {
+      "homeserver": "localhost:8080",
+      "scheme": "http",
+      "os": "Windows"
+    }
+  },
+  {
+    "value": "testdriverApi_B_LINUX_Client",
+    "url": "http://localhost:30002",
+    "tags": ["proClient", "canSendMessages", "practitioner"],
+    "properties": {
+      "homeserver": "localhost:8080",
+      "scheme": "http",
+      "os": "Windows"
+    }
+  },
+  {
+    "value": "testdriverApi_C_LINUX_Client",
+    "url": "http://localhost:30003",
+    "tags": ["proClient", "canSendMessages", "prefIOP", "practitioner"],
+    "properties": {
+      "homeserver": "localhost:8081",
+      "scheme": "http",
+      "os": "Windows"
+    }
+  },
+  {
+    "value": "testdriverApi_D_LINUX_Orgadmin",
+    "url": "http://localhost:30004",
+    "tags": ["orgAdmin"],
+    "properties": {
+      "homeserver": "localhost:8080",
+      "scheme": "http",
+      "os": "Windows"
+    }
+  }
+]

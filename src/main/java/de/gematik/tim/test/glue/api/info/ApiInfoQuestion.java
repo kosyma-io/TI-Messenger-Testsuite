@@ -76,7 +76,9 @@ public class ApiInfoQuestion extends ParallelQuestionRunner<InfoObjectDTO> {
   @NotNull
   private static String addHttpsIfNotSet(String homeserver) {
     if (!homeserver.startsWith("http://") && !homeserver.startsWith("https://")) {
-      homeserver = "https://" + homeserver;
+      homeserver = Boolean.getBoolean("local.mode") // reads -Dlocal.mode=true
+          ? "http://" + homeserver
+          : "https://" + homeserver;
     }
     return homeserver;
   }

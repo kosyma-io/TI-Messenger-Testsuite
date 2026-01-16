@@ -22,10 +22,11 @@ When there are changes to the Gematik Project, we sync change to our public fork
 
 ## Setup Testsuite
 
-- Prerquisites
-  - Multiple test driver instances running in parallel (see [testdriver/GETTING_STARTED.md](../testdriver/GETTING_STARTED.md) for setting that up)
-  - Running Uwanja: `http//:localhost:3030`
-  - Running OrgAdmin: `http//:localhost:5173`
+- Prerequisites
+  - Multiple test driver instances running in parallel  
+    (see [testdriver/GETTING_STARTED.md](../testdriver/GETTING_STARTED.md) for setting that up)
+  - Running Uwanja: `http://localhost:3030`
+  - Running OrgAdmin: `http://localhost:5173`
 
 The testsuite project requires jdk17 and maven 3.6.3.
 To isolate these versions to this project, one can use sdkman.
@@ -88,9 +89,28 @@ brew install vfox
 
 ### Run a test case defined in this testsuite
 
+#### Normal mode (production combine_items.json)
+
 ```bash
 mvn clean verify \
   -Dfeature.template.dir="./src/test/resources/templates/FeatureFiles/TI-M_V2/UCs_Basis" \
   -Dcucumber.filter.tags='@TCID:TIM_V2_BASIS_AF_10X0102' \
   -Poneonly
 ```
+
+#### Local mode (uses combine_items_local.json)
+
+```bash
+mvn clean verify \
+  -Dfeature.template.dir="./src/test/resources/templates/FeatureFiles/TI-M_V2/UCs_Basis" \
+  -Dcucumber.filter.tags='@TCID:TIM_V2_BASIS_AF_10X0102' \
+  -Poneonly \
+  -Plocal
+```
+
+The `-Plocal` flag switches the testsuite to use:
+```
+src/test/resources/combine_items_local.json
+```
+
+and adjusts the homeserver protocol handling accordingly.

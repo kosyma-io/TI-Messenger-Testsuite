@@ -371,6 +371,7 @@
           <systemPropertyVariables>
             <cucumber.filter.tags>${cucumber.filter.tags}</cucumber.filter.tags>
             <cucumber.plugin>${custom.plugin}</cucumber.plugin>
+            <local.mode>${local.mode}</local.mode>
           </systemPropertyVariables>
           <forkedProcessExitTimeoutInSeconds>120</forkedProcessExitTimeoutInSeconds>
         </configuration>
@@ -385,4 +386,16 @@
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>local</id>
+      <properties>
+        <combine.items.file>
+          ${project.basedir}/src/test/resources/combine_items_local.json
+        </combine.items.file>
+        <local.mode>true</local.mode>
+      </properties>
+    </profile>
+  </profiles>
 </project>
